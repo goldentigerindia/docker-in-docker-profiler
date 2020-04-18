@@ -3,10 +3,10 @@ services:
   docker-in-docker:
     restart: always
     privilaged: true
-    image: goldentigerindia/docker-in-docker-profiler:0.0.1-cc72577-dirty
+    image: goldentigerindia/docker-in-docker-profiler:0.0.1-efca9c2-dirty
     environment:
-      - ENVIRONMENT_NAME=dev
-      - BUILD_BRANCH=develop
+      - ENVIRONMENT_NAME=qa
+      - BUILD_BRANCH=master
       - HOST_PROC=/rootfs/proc
       - HOST_SYS=/rootfs/sys
       - HOST_ETC=/rootfs/etc
