@@ -41,32 +41,28 @@ build: pre-build docker-build post-build
 pre-build:
 
 
-post-build:
+post-build: push
 
 
 pre-push:
 
 
 post-push:
-
-
-
+	git add --all .
+	git commit -m "Changes for build  $(VERSION)"
+	git push
 docker-build: .release
 	docker build $(DOCKER_BUILD_ARGS) -t $(IMAGE):$(VERSION) $(DOCKER_BUILD_CONTEXT) -f $(DOCKER_FILE_PATH)
 	@DOCKER_MAJOR=$(shell docker -v | sed -e 's/.*version //' -e 's/,.*//' | cut -d\. -f1) ; \
 	DOCKER_MINOR=$(shell docker -v | sed -e 's/.*version //' -e 's/,.*//' | cut -d\. -f2) ; \
 	if [ $$DOCKER_MAJOR -eq 1 ] && [ $$DOCKER_MINOR -lt 10 ] ; then \
-		echo docker tag -f $(IMAGE):$(VERSION) $(IMAGE):latest ;\
-		docker tag -f $(IMAGE):$(VERSION) $(IMAGE):latest ;\
 		echo docker tag -f $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag -f $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
 	else \
-		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ;\
-		docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ; \
 		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ; \
 	fi
-
+	sed 's/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
 .release:
 	@echo "release=0.0.0" > .release
 	@echo "tag=$(NAME)-0.0.0" >> .release
@@ -81,7 +77,6 @@ push: pre-push do-push post-push
 
 do-push: 
 	docker push $(IMAGE):$(VERSION)
-	docker push $(IMAGE):latest
 	docker push $(IMAGE):$(BRANCH)
 
 snapshot: build push

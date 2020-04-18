@@ -1,4 +1,4 @@
-FROM goldentigerindia/docker-in-docker:latest
+FROM goldentigerindia/docker-in-docker:develop
 USER root
 #Environment Variables
 ARG ENVIRONMENT_NAME
