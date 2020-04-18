@@ -3,17 +3,21 @@ services:
   docker-in-docker-profiler:
     labels:
       app.name: "docker-in-docker-profiler"
-      app.version: "{VERSION}"
-      app.build_date: "{DATE}"
-      app.environment: "{ENVIRONMENT_NAME}"
-      app.branch: "{BUILD_BRANCH}"
+      app.version: "0.0.1-6cfc917-dirty"
+      app.build_date: "20200418120424"
+      app.environment: "dev"
+      app.branch: "develop"
     container_name: docker-in-docker-profiler
     restart: always
     privileged: true
-    image: goldentigerindia/docker-in-docker-profiler:{VERSION}
+<<<<<<< HEAD
+    image: goldentigerindia/docker-in-docker-profiler:0.0.1-fb7e9a7-dirty
+=======
+    image: goldentigerindia/docker-in-docker-profiler:0.0.1-6cfc917-dirty
+>>>>>>> 82d57b2e4e1c10770613c96ac264d1b9aefb6f87
     environment:
-      - ENVIRONMENT_NAME={ENVIRONMENT_NAME}
-      - BUILD_BRANCH={BUILD_BRANCH}
+      - ENVIRONMENT_NAME=dev
+      - BUILD_BRANCH=develop
       - HOST_PROC=/rootfs/proc
       - HOST_SYS=/rootfs/sys
       - HOST_ETC=/rootfs/etc

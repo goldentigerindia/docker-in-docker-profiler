@@ -15,6 +15,7 @@
 #
 REGISTRY_HOST=hub.docker.com
 USERNAME=goldentigerindia
+BUILD_DATE=$(shell TZ=GMT date +"%Y%m%d%H%M%S")
 NAME=$(shell basename $(CURDIR))
 ENVIRONMENT_NAME=qa
 BRANCH := $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
@@ -62,7 +63,7 @@ docker-build: .release
 		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ; \
 	fi
-	sed 's/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
+	sed 's/{DATE}/$(BUILD_DATE)/g; s/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
 .release:
 	@echo "release=0.0.0" > .release
 	@echo "tag=$(NAME)-0.0.0" >> .release
