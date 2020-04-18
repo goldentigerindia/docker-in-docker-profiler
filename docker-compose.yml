@@ -5,8 +5,8 @@ services:
     privileged: true
     image: goldentigerindia/docker-in-docker-profiler:0.0.1-b73c317-dirty
     environment:
-      - ENVIRONMENT_NAME=dev
-      - BUILD_BRANCH=develop
+      - ENVIRONMENT_NAME=qa
+      - BUILD_BRANCH=master
       - HOST_PROC=/rootfs/proc
       - HOST_SYS=/rootfs/sys
       - HOST_ETC=/rootfs/etc
