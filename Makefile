@@ -17,7 +17,7 @@ REGISTRY_HOST=hub.docker.com
 USERNAME=goldentigerindia
 BUILD_DATE=$(shell TZ=GMT date +"%Y%m%d%H%M%S")
 NAME=$(shell basename $(CURDIR))
-ENVIRONMENT_NAME=live
+ENVIRONMENT_NAME=qa
 BRANCH := $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
 HASH := $(shell git rev-parse HEAD)
 DOCKER_BUILD_ARGS= --no-cache --build-arg BUILD_BRANCH=${BRANCH} --build-arg ENVIRONMENT_NAME=${ENVIRONMENT_NAME}
