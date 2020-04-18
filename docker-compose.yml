@@ -1,9 +1,15 @@
 version: '3.4'
 services:
-  docker-in-docker:
+  docker-in-docker-profiler:
+    deploy:
+      labels:
+        app.name: "docker-in-docker-profiler"
+        app.version: "0.0.1-736ac01-dirty"
+        app.build_date: "20200418091620"
+    container_name: docker-in-docker-profiler
     restart: always
     privilaged: true
-    image: goldentigerindia/docker-in-docker-profiler:0.0.1-5db592d-dirty
+    image: goldentigerindia/docker-in-docker-profiler:0.0.1-736ac01-dirty
     environment:
       - ENVIRONMENT_NAME=live
       - BUILD_BRANCH=release
