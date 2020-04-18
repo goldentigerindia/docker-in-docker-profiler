@@ -1,6 +1,13 @@
 version: '3.4'
 services:
   docker-in-docker-profiler:
+    labels:
+      app.name: "docker-in-docker-profiler"
+      app.version: "{VERSION}"
+      app.build_date: "{DATE}"
+      app.environment: "{ENVIRONMENT_NAME}"
+      app.branch: "{BUILD_BRANCH}"
+    container_name: docker-in-docker-profiler
     restart: always
     privileged: true
     image: goldentigerindia/docker-in-docker-profiler:{VERSION}

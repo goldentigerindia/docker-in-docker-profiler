@@ -1,4 +1,4 @@
-FROM goldentigerindia/docker-in-docker:master
+FROM goldentigerindia/docker-in-docker:develop
 USER root
 #Environment Variables
 ARG ENVIRONMENT_NAME
@@ -18,6 +18,4 @@ RUN git clone --branch ${BUILD_BRANCH} https://goldentigerindia:49d7fc92bfec7278
 RUN cd /root/go/src/github.com/goldentigerindia/profiling-agent && go build -mod=vendor -o /app/profiling-agent .
 WORKDIR /app
 ENTRYPOINT ["/app/start.sh"]
-EXPOSE 8443
-
-
+EXPOSE 8080

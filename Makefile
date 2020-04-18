@@ -15,6 +15,7 @@
 #
 REGISTRY_HOST=hub.docker.com
 USERNAME=goldentigerindia
+BUILD_DATE=$(shell TZ=GMT date +"%Y%m%d%H%M%S")
 NAME=$(shell basename $(CURDIR))
 ENVIRONMENT_NAME=qa
 BRANCH := $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
@@ -58,11 +59,15 @@ docker-build: .release
 	if [ $$DOCKER_MAJOR -eq 1 ] && [ $$DOCKER_MINOR -lt 10 ] ; then \
 		echo docker tag -f $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag -f $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
+		echo docker tag -f $(IMAGE):$(VERSION) $(IMAGE):latest ;\
+                docker tag -f $(IMAGE):$(VERSION) $(IMAGE):latest ;\
 	else \
 		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ; \
+		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ;\
+                docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ; \
 	fi
-	sed 's/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
+	sed 's/{DATE}/$(BUILD_DATE)/g; s/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
 .release:
 	@echo "release=0.0.0" > .release
 	@echo "tag=$(NAME)-0.0.0" >> .release
@@ -78,6 +83,7 @@ push: pre-push do-push post-push
 do-push: 
 	docker push $(IMAGE):$(VERSION)
 	docker push $(IMAGE):$(BRANCH)
+	docker push $(IMAGE):latest
 
 snapshot: build push
 
