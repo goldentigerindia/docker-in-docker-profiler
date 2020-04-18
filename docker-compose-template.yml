@@ -1,8 +1,8 @@
 version: '3.4'
 services:
-  docker-in-docker:
+  docker-in-docker-profiler:
     restart: always
-    privilaged: true
+    privileged: true
     image: goldentigerindia/docker-in-docker-profiler:{VERSION}
     environment:
       - ENVIRONMENT_NAME={ENVIRONMENT_NAME}
