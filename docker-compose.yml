@@ -3,7 +3,7 @@ services:
   docker-in-docker:
     restart: always
     privilaged: true
-    image: goldentigerindia/docker-in-docker-profiler:0.0.1-efca9c2-dirty
+    image: goldentigerindia/docker-in-docker-profiler:0.0.1-5db592d-dirty
     environment:
       - ENVIRONMENT_NAME=live
       - BUILD_BRANCH=release
